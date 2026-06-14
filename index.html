@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preface HR Assistant</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+    
+    <style>
+        /* Base reset to ensure the chat takes over the entire viewport */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            overflow: hidden; /* Prevents body scrolling, allowing the chat container to handle internal scrolling */
+        }
+        
+        /* The target container for the fullscreen chat */
+        #n8n-chat-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="n8n-chat-container"></div>
+
+    <script type="module">
+        import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+        createChat({
+            // ---------------------------------------------------------
+            // Core Connection Settings
+            // ---------------------------------------------------------
+            
+            // The URL of your n8n Webhook endpoint (must be the production URL, e.g., /webhook/chat/...)
+            webhookUrl: 'https://prefacecontent.app.n8n.cloud/webhook/1dee0dd0-b79b-44fb-aea2-245ba83d12fb/chat', 
+            
+            // Configuration for the Webhook request.
+            webhookConfig: {
+                method: 'POST',
+                headers: {}
+            },
+
+            // ---------------------------------------------------------
+            // UI & Display Settings
+            // ---------------------------------------------------------
+            
+            // The CSS selector of the element where the Chat window should be embedded.
+            target: '#n8n-chat-container',
+            
+            // The render mode of the Chat window: 'window' or 'fullscreen'.
+            mode: 'fullscreen',
+            
+            // Whether to show the welcome screen when the Chat window is opened.
+            showWelcomeScreen: true,
+            
+            // The initial messages to be displayed in the Chat window.
+            initialMessages: [
+                'Hi there! 👋',
+                'I am the Preface HR Assistant.',
+                'How can I help you with our HR policies, employee benefits, or workplace guidelines today?'
+            ],
+
+            // ---------------------------------------------------------
+            // Functionality & Chat Logic Settings
+            // ---------------------------------------------------------
+            
+            // The key to use for sending the user's chat input to the AI Agent node.
+            chatInputKey: 'chatInput',
+            
+            // The key to use for sending the chat history session ID for the AI Memory node.
+            chatSessionKey: 'sessionId',
+            
+            // Whether to load previous messages (chat context) if the user refreshes.
+            loadPreviousSession: true,
+            
+            // Whether to enable streaming responses from the n8n workflow.
+            // Note: The n8n Chat Trigger node must also have streaming enabled.
+            enableStreaming: true,
+
+            // Whether to allow file uploads in the chat interface.
+            allowFileUploads: false,
+            
+            // A comma-separated list of allowed MIME types for file uploads (e.g., 'image/*,application/pdf').
+            // Only applicable if allowFileUploads is set to true. If left empty, all file types are allowed.
+            allowedFilesMimeTypes: '',
+            
+            // Additional custom metadata to include with the payload sent to n8n.
+            metadata: {
+                context: 'hr-policy-inquiry'
+            },
+
+            // ---------------------------------------------------------
+            // Localization Settings
+            // ---------------------------------------------------------
+            
+            // The default language of the Chat window.
+            defaultLanguage: 'en',
+            
+            // The i18n configuration for customizing the widget's text elements.
+            i18n: {
+                en: {
+                    title: 'Preface HR Assistant',
+                    subtitle: 'Ask me anything about HR policies, benefits, and more.',
+                    footer: '',
+                    getStarted: 'Start Chat',
+                    inputPlaceholder: 'Type your HR question...',
+                }
+            }
+        });
+    </script>
+</body>
+</html>
